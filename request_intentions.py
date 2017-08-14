@@ -69,7 +69,7 @@ def get_articles(current_url):
 # 获取 categories 下全部超链接
 def main():
     total_link_list = []
-    for i in xrange(0,50,10):
+    for i in xrange(0,560,10):
         current_list = get_categories(current_url = 'http://cv.qiaobutang.com/knowledge/intentions?skip='+str(i))
         total_link_list.extend(current_list)
 
