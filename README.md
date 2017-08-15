@@ -1,14 +1,21 @@
-# qiaobupa
+# qiaobupa 和 kanzhun 的咨询页面调整
 
-执行下面语句可以获取http://cv.qiaobutang.com/knowledge/categories下的所有文章,总计约5990篇
+执行下面语句可以获取http://cv.qiaobutang.com/knowledge/categories 下的所有文章,总计约5990篇
 ```
 python request_categories.py
 ```
 
-执行下面语句可以获取http://cv.qiaobutang.com/knowledge/intentions下的所有文章,总计约560篇
+执行下面语句可以获取http://cv.qiaobutang.com/knowledge/intentions 下的所有文章,总计约560篇
 ```
 python request_intentions.py
 ```
+
+执行下面语句可以获取http://www.kanzhun.com/news/ 下的所有文章,大约15*261篇
+```
+python request_kanzhun.py
+```
+
+
 
 执行过程实际是两步
 

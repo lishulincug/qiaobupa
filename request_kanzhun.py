@@ -34,21 +34,21 @@ headers = {
 def get_categories(current_url):
     r = requests.request("GET", current_url, headers=headers)
     e_html = etree.HTML(r.text)
-    link_list = e_html.xpath('//a[@class="article_title__txt left"]/@href')
+    link_list = e_html.xpath('//dd/h3/a/@href')
     return link_list
 
 
 
 # 获取当前文章内容和标题
 def get_articles(current_url):
-    r = requests.request("GET", 'http://cv.qiaobutang.com'+current_url, headers=headers)
+    r = requests.request("GET", 'http://www.kanzhun.com'+current_url, headers=headers)
     e_html = etree.HTML(r.text)
-    page_title = e_html.xpath('//div[@class="article__title"]/h1/text()')
+    page_title = e_html.xpath('//div[@class="picture_news mb20"]/h2/text()')
     page_title =  page_title[0]
     # print page_title
 
 
-    page_content=e_html.xpath('//div[@class="article__body"]')
+    page_content=e_html.xpath('//div[@class="detail_con"]')
     page_content = etree.tostring(page_content[0])
     page_content = parser.unescape(page_content)
 
@@ -69,12 +69,14 @@ def get_articles(current_url):
 # 获取 categories 下全部超链接
 def main():
     total_link_list = []
-    for i in xrange(0,5990,10):
-        current_list = get_categories(current_url = 'http://cv.qiaobutang.com/knowledge/categories?skip='+str(i))
+    for i in xrange(1,261):
+        current_list = get_categories(current_url = 'http://www.kanzhun.com/news/p'+str(i)+'/')
         total_link_list.extend(current_list)
 
+        # print current_list
+
         # 进度条
-        sys.stdout.write(str(i) +'/5990 链接已获取! \r')
+        sys.stdout.write(str(i) +'/261页链接已获取! \r')
         sys.stdout.flush()
 
 
@@ -84,14 +86,14 @@ def main():
     g = 0
     for link in total_link_list:
         # 进度条
-        sys.stdout.write(str(g) +'/5990 页面已获取! \r')
+        sys.stdout.write(str(g) +'/'+str(link_length)+' 页面已获取! \r')
         sys.stdout.flush()
         g = g+1
 
         article_obj = get_articles(link)
         jsonStr = json.dumps(article_obj, sort_keys=True, indent=2) 
 
-        with open('categories_articles.json','a') as wf:
+        with open('kanzhun_articles.json','a') as wf:
             wf.write(jsonStr+',\n')
 
 
